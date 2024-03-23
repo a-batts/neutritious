@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:neutritious/category_page.dart';
-
 import 'enums/menu_category.dart';
+
 
 void main() {
   runApp(const MyApp());

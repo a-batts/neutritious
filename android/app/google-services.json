@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "732888144372",
+    "project_id": "neutritious-ca9c4",
+    "storage_bucket": "neutritious-ca9c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:732888144372:android:d94b85c668233f48c4c1a1",
+        "android_client_info": {
+          "package_name": "com.example.neutritious"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0AUU0t4Jd6_EKcuxjlWgSA-fPSukmZGk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
