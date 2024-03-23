@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'enums/menu_category.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -55,21 +57,48 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-  Widget _menuItem(String title, Color color) {
+  Widget _menuItem(
+    MenuCategory category,
+  ) {
+    Color textColor = ColorScheme.fromSeed(seedColor: category.color).onPrimary;
+
     return (SizedBox(
       width: double.infinity,
       child: Card(
-          color: color,
+          color: category.color,
           child: InkWell(
             borderRadius: BorderRadius.circular(12.0),
             onTap: () => {},
             child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 22.0, vertical: 20.0),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.w500),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Icon(
+                        category.icon,
+                        color: textColor,
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          category.title,
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w500,
+                              color: textColor),
+                        ),
+                        Text(
+                          category.description,
+                          style: TextStyle(color: textColor),
+                        )
+                      ],
+                    )
+                  ],
                 )),
           )),
     ));
@@ -105,11 +134,19 @@ class _MenuPageState extends State<MenuPage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Wrap(runSpacing: 16.0, children: <Widget>[
-              _menuItem("Appetizers", Colors.greenAccent),
-              _menuItem("Entrees", Colors.blueAccent),
-              _menuItem("Sides", Colors.deepPurpleAccent),
-              _menuItem("Desserts", Colors.orangeAccent),
+            Wrap(runSpacing: 12.0, children: <Widget>[
+              _menuItem(
+                MenuCategory.appetizers,
+              ),
+              _menuItem(
+                MenuCategory.entrees,
+              ),
+              _menuItem(
+                MenuCategory.sides,
+              ),
+              _menuItem(
+                MenuCategory.desserts,
+              ),
             ])
           ],
         ),
