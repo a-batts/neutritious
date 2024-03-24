@@ -122,6 +122,14 @@ class _CategoryPageState extends State<CategoryPage> {
                     style: const TextStyle(
                         fontSize: 45.0, fontWeight: FontWeight.w600))
               ])),
+          Text(
+            category.description,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 18.0),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           Wrap(
               runSpacing: 16.0,
               alignment: WrapAlignment.center,
