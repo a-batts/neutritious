@@ -1,9 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:neutritious/category_page.dart';
-import 'package:neutritious/menu_page.dart';
 import 'package:neutritious/sign_in_page.dart';
-import 'enums/menu_category.dart';
 import 'firebase_options.dart';
 
 

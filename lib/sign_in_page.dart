@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:neutritious/enums/menu_category.dart';
 import 'package:neutritious/menu_page.dart';
 
 class SignInPage extends StatefulWidget {
