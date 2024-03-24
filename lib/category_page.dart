@@ -95,6 +95,89 @@ class _CategoryPageState extends State<CategoryPage> {
     });
   }
 
+  openDialog() {
+    showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => (Dialog(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 30.0, vertical: 16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        Text(
+                          "Add to ${widget.category.name}",
+                          style: const TextStyle(
+                              fontSize: 24.0, fontWeight: FontWeight.w500),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              setState(() {
+                                _newTitle = "";
+                                _newDescription = "";
+                                _newImage = null;
+                              });
+                            },
+                            icon: const Icon(Icons.close))
+                      ],
+                    ),
+                    const SizedBox(height: 15, width: 600),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Title',
+                      ),
+                      onChanged: (String newVal) {
+                        setState(() {
+                          _newTitle = newVal;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    TextField(
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Description',
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 12,
+                      minLines: 4,
+                      onChanged: (String newVal) {
+                        setState(() {
+                          _newDescription = newVal;
+                        });
+                      },
+                    ),
+                    Text(_newTitle),
+                    const SizedBox(height: 15),
+                    FilledButton(
+                        onPressed: _newImage == null ? uploadFile : null,
+                        child: const Text("Upload image")),
+                    const SizedBox(height: 15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: _newTitle.characters.isNotEmpty &&
+                                  _newDescription.characters.isNotEmpty &&
+                                  _newImage != null
+                              ? addItem
+                              : null,
+                          child: const Text('Save'),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            )));
+  }
+
   @override
   Widget build(BuildContext context) {
     final MenuCategory category = widget.category;
@@ -127,89 +210,6 @@ class _CategoryPageState extends State<CategoryPage> {
             builder: (context) =>
                 ItemPage(item: items.elementAt(selectedItem))),
       );
-    }
-
-    openDialog() {
-      showDialog<String>(
-          context: context,
-          builder: (BuildContext context) => (Dialog(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Text(
-                            "Add to ${category.name}",
-                            style: const TextStyle(
-                                fontSize: 24.0, fontWeight: FontWeight.w500),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                setState(() {
-                                  _newTitle = "";
-                                  _newDescription = "";
-                                  _newImage = null;
-                                });
-                              },
-                              icon: const Icon(Icons.close))
-                        ],
-                      ),
-                      const SizedBox(height: 15, width: 600),
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Title',
-                        ),
-                        onChanged: (String newVal) {
-                          setState(() {
-                            _newTitle = newVal;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Description',
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 12,
-                        minLines: 4,
-                        onChanged: (String newVal) {
-                          setState(() {
-                            _newDescription = newVal;
-                          });
-                        },
-                      ),
-                      Text(_newTitle),
-                      const SizedBox(height: 15),
-                      FilledButton(
-                          onPressed: _newImage == null ? uploadFile : null,
-                          child: const Text("Upload image")),
-                      const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          TextButton(
-                            onPressed: _newTitle.characters.isNotEmpty &&
-                                    _newDescription.characters.isNotEmpty &&
-                                    _newImage != null
-                                ? addItem
-                                : null,
-                            child: const Text('Save'),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              )));
     }
 
     return Scaffold(
