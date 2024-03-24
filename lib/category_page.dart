@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:neutritious/db/user_menu_item.dart';
 import 'package:neutritious/enums/menu_category.dart';
+import 'package:neutritious/random_page.dart';
 
 import 'item_page.dart';
 
@@ -44,7 +45,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       imageURL,
                       width: 100,
                       height: 100,
-                    ) else const SizedBox(width: 100, height: 100,),
+                    ) /*else const SizedBox(width: 100, height: 100,)*/,
                     const SizedBox(
                       width: 12.0,
                     ),
@@ -91,7 +92,7 @@ class _CategoryPageState extends State<CategoryPage> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                ItemPage(item: items.elementAt(selectedItem))),
+                RandomPage(item: items.elementAt(selectedItem))),
       );
     }
 
