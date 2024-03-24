@@ -27,6 +27,8 @@ class _ItemPageState extends State<ItemPage> {
                 imageURL,
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
+                fit: BoxFit.cover,
+                errorBuilder: (context, e, s) => Container(),
               ),
             Padding(
               padding: const EdgeInsets.all(26.0),

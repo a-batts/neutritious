@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:neutritious/db/database_service.dart';
 import 'package:neutritious/db/user_menu_item.dart';
 import 'package:neutritious/enums/menu_category.dart';
 import 'package:neutritious/new_form_dialog.dart';
@@ -25,6 +26,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return (SizedBox(
       width: 600,
       child: Card(
+        clipBehavior: Clip.antiAlias,
           child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
         onTap: () => {
@@ -33,10 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
             MaterialPageRoute(builder: (context) => ItemPage(item: data)),
           )
         },
-        child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 22.0, vertical: 20.0),
-            child: Row(
+        child: Row(
               children: [
                 Row(
                   children: [
@@ -45,24 +44,24 @@ class _CategoryPageState extends State<CategoryPage> {
                         imageURL,
                         width: 100,
                         height: 100,
-                      )
-                    else
-                      const SizedBox(
-                        width: 100,
-                        height: 100,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, e, s) => Container(),
                       ),
-                    const SizedBox(
-                      width: 12.0,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(children: [ const SizedBox(
+                        width: 12.0,
+                      ),
+                      Text(
+                        data.title,
+                        style: const TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.w500),
+                      )]),
                     ),
-                    Text(
-                      data.title,
-                      style: const TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w500),
-                    )
                   ],
                 )
               ],
-            )),
+            ),
       )),
     ));
   }
@@ -74,33 +73,38 @@ class _CategoryPageState extends State<CategoryPage> {
     showDialog<String>(
         context: context,
         builder: (BuildContext context) => Dialog(
-              child: NewFormDialog(category: widget.category,),
+              child: NewFormDialog(
+                category: widget.category,
+              ),
             ));
   }
 
   @override
   Widget build(BuildContext context) {
     final MenuCategory category = widget.category;
+    var db = DatabaseService();
 
-    const List<UserMenuItem> items = [
-      UserMenuItem(
-          title: "10 Jumping Jacks",
-          content: "Lorem ipsum",
-          imageURL:
-              "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"),
-      UserMenuItem(
-          title: "Go Outside",
-          content: "Lorem ipsum",
-          imageURL:
-              "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Squidward_Tentacles_%28fair_use%29.svg/1200px-Squidward_Tentacles_%28fair_use%29.svg.png"),
-      UserMenuItem(
-        title: "Go Outside",
-        content: "Lorem ipsum",
-      )
-    ];
+    // const List<UserMenuItem> items = [
+    //   UserMenuItem(
+    //       title: "10 Jumping Jacks",
+    //       content: "Lorem ipsum",
+    //       imageURL:
+    //           "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"),
+    //   UserMenuItem(
+    //       title: "Go Outside",
+    //       content: "Lorem ipsum",
+    //       imageURL:
+    //           "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Squidward_Tentacles_%28fair_use%29.svg/1200px-Squidward_Tentacles_%28fair_use%29.svg.png"),
+    //   UserMenuItem(
+    //     title: "Go Outside",
+    //     content: "Lorem ipsum",
+    //   )
+    // ];
+
+    var items = db.fetchUserMenuItems();
 
     // Select a random item and display it //
-    selectRandomItem() {
+    selectRandomItem(List<UserMenuItem> items) {
       Random random = Random();
       int selectedItem = random.nextInt(items.length);
 
@@ -128,22 +132,39 @@ class _CategoryPageState extends State<CategoryPage> {
                   style: const TextStyle(
                       fontSize: 30.0, fontWeight: FontWeight.w600))
             ]),
-            const SizedBox(height: 16.0),
             Wrap(runSpacing: 16.0, children: <Widget>[
-              SizedBox(
-                width: 600.0,
-                child: FilledButton.icon(
-                    onPressed: () => selectRandomItem(),
-                    label: const Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child:
-                            Text("RANDOM", style: TextStyle(fontSize: 22.0))),
-                    icon: const Icon(Icons.casino),
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(6.0)))),
-              ),
-              ...items.map((item) => _itemCard(item)),
+              FutureBuilder(
+                  future: items,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data?.isEmpty == true) {
+                        return const SizedBox(
+                            width: 600, child: Card(child: Text("No data")));
+                      } else {
+                        var items = snapshot.data;
+                        return Column(children: [
+                          SizedBox(
+                            width: 600.0,
+                            child: FilledButton.icon(
+                                onPressed: () => selectRandomItem(items!),
+                                label: const Padding(
+                                    padding: EdgeInsets.all(12.0),
+                                    child: Text("RANDOM",
+                                        style: TextStyle(fontSize: 22.0))),
+                                icon: const Icon(Icons.casino),
+                                style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(6.0)))),
+                          ),
+                          const SizedBox(height: 16.0),
+                          ...items?.map((item) => _itemCard(item)) ?? []
+                        ]);
+                      }
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
+                  }),
               SizedBox(
                 width: 600.0,
                 child: FilledButton.icon(

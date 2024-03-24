@@ -28,5 +28,5 @@ class UserMenuItem {
       title = map['title'],
       content = map['content'],
       imageURL = map['imageURL'],
-      likeUIDs = map['likeUIDs'];
+      likeUIDs = map['likeUIDs']?.cast<String>() ?? [];
 }

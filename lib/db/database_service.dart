@@ -22,6 +22,17 @@ class DatabaseService {
     return UserMenuItem.fromMap(item);
   }
 
+  Future<List<UserMenuItem>> fetchUserMenuItems() async {
+    try {
+    var item = (await _db.collection('menuitems').get());
+    return item.docs.map((e) => UserMenuItem.fromMap(e.data())).toList();
+    } catch(e, trace) {
+      print(e);
+      print(trace);
+      return [];
+    }
+  }
+
   Future<void> createUserMenuItem(UserMenuItem item) async {
     var map = item.toMap();
     String? id = map.remove("id");
