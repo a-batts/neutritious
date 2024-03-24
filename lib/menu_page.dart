@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:neutritious/db/user_menu_item.dart';
 import 'package:neutritious/profile_page.dart';
 
 import 'category_page.dart';
 import 'enums/menu_category.dart';
+import 'item_page.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -70,6 +72,84 @@ class _MenuPageState extends State<MenuPage> {
     ));
   }
 
+  Widget _countdownTimer() {
+    DateTime event = DateTime.now().add(const Duration(days: 2));
+
+    DateTime now = DateTime.now();
+    int diffDays = event.difference(now).inDays;
+
+    return (SizedBox(
+      width: double.infinity,
+      child: Card(
+          color: Colors.redAccent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12.0),
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ItemPage(
+                        item: UserMenuItem(
+                            content: "Day trip with friends to Virginia Beach",
+                            title: "Trip to beach",
+                            imageURL:
+                                "https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_907,q_75,w_1100/v1/clients/virginiabeachva/144_3_3841_jpeg_18990e3e-6c17-4c58-bee7-03cb285c9dc3.jpg"))),
+              )
+            },
+            child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 22.0, vertical: 20.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Column(
+                          children: [
+                            Text(
+                              diffDays.toString(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 50.0,
+                                  color: Colors.white),
+                            ),
+                            const Text(
+                              "days",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 16.0),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    const Flexible(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "✨ Special",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 6.0,
+                        ),
+                        Text(
+                          "Trip to beach",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                    ))
+                  ],
+                )),
+          )),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -116,6 +196,7 @@ class _MenuPageState extends State<MenuPage> {
                     "MENU",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
+                  _countdownTimer(),
                   _menuItem(
                     MenuCategory.appetizers,
                   ),
