@@ -24,12 +24,35 @@ class _CategoryPageState extends State<CategoryPage> {
       child: Card(
           child: InkWell(
         borderRadius: BorderRadius.circular(12.0),
-        onTap: () => {},
+        onTap: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ItemPage(item: data)),
+          )
+        },
         child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 22.0, vertical: 20.0),
             child: Row(
-              children: [Text(data.name)],
+              children: [
+                Row(
+                  children: [
+                    Image.network(
+                      data.imageURL,
+                      width: 100,
+                      height: 100,
+                    ),
+                    const SizedBox(
+                      width: 12.0,
+                    ),
+                    Text(
+                      data.name,
+                      style: const TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.w500),
+                    )
+                  ],
+                )
+              ],
             )),
       )),
     ));
@@ -41,8 +64,15 @@ class _CategoryPageState extends State<CategoryPage> {
 
     const List<ItemData> items = [
       ItemData(
-          name: "10 Jumping Jacks", description: "Lorem ipsum", imageURL: ""),
-      ItemData(name: "Go Outside", description: "Lorem ipsum", imageURL: "")
+          name: "10 Jumping Jacks",
+          description: "Lorem ipsum",
+          imageURL:
+              "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"),
+      ItemData(
+          name: "Go Outside",
+          description: "Lorem ipsum",
+          imageURL:
+              "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Squidward_Tentacles_%28fair_use%29.svg/1200px-Squidward_Tentacles_%28fair_use%29.svg.png")
     ];
 
     // Select a random item and display it //
