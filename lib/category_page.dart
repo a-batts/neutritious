@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:neutritious/db/user_menu_item.dart';
 import 'package:neutritious/enums/menu_category.dart';
@@ -39,12 +40,17 @@ class _CategoryPageState extends State<CategoryPage> {
               children: [
                 Row(
                   children: [
-                    if(imageURL != null)
-                    Image.network(
-                      imageURL,
-                      width: 100,
-                      height: 100,
-                    ) else const SizedBox(width: 100, height: 100,),
+                    if (imageURL != null)
+                      Image.network(
+                        imageURL,
+                        width: 100,
+                        height: 100,
+                      )
+                    else
+                      const SizedBox(
+                        width: 100,
+                        height: 100,
+                      ),
                     const SizedBox(
                       width: 12.0,
                     ),
@@ -61,6 +67,34 @@ class _CategoryPageState extends State<CategoryPage> {
     ));
   }
 
+  String _newTitle = "";
+  String _newDescription = "";
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  FilePickerResult? _newImage;
+
+  uploadFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    setState(() {
+      _newImage = result;
+    });
+  }
+
+  addItem() {
+    // TODO: database upload here
+
+    titleController.clear();
+    descriptionController.clear();
+
+    Navigator.pop(context);
+    setState(() {
+      _newTitle = "";
+      _newDescription = "";
+      _newImage = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final MenuCategory category = widget.category;
@@ -70,17 +104,17 @@ class _CategoryPageState extends State<CategoryPage> {
           title: "10 Jumping Jacks",
           content: "Lorem ipsum",
           imageURL:
-              "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"
-              ),
+              "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"),
       UserMenuItem(
           title: "Go Outside",
           content: "Lorem ipsum",
           imageURL:
               "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Squidward_Tentacles_%28fair_use%29.svg/1200px-Squidward_Tentacles_%28fair_use%29.svg.png"),
       UserMenuItem(
-          title: "Go Outside",
-          content: "Lorem ipsum",
-          )    ];
+        title: "Go Outside",
+        content: "Lorem ipsum",
+      )
+    ];
 
     // Select a random item and display it //
     selectRandomItem() {
@@ -93,6 +127,89 @@ class _CategoryPageState extends State<CategoryPage> {
             builder: (context) =>
                 ItemPage(item: items.elementAt(selectedItem))),
       );
+    }
+
+    openDialog() {
+      showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => (Dialog(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 30.0, vertical: 16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Text(
+                            "Add to ${category.name}",
+                            style: const TextStyle(
+                                fontSize: 24.0, fontWeight: FontWeight.w500),
+                          ),
+                          const Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                setState(() {
+                                  _newTitle = "";
+                                  _newDescription = "";
+                                  _newImage = null;
+                                });
+                              },
+                              icon: const Icon(Icons.close))
+                        ],
+                      ),
+                      const SizedBox(height: 15, width: 600),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Title',
+                        ),
+                        onChanged: (String newVal) {
+                          setState(() {
+                            _newTitle = newVal;
+                          });
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Description',
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: 12,
+                        minLines: 4,
+                        onChanged: (String newVal) {
+                          setState(() {
+                            _newDescription = newVal;
+                          });
+                        },
+                      ),
+                      Text(_newTitle),
+                      const SizedBox(height: 15),
+                      FilledButton(
+                          onPressed: _newImage == null ? uploadFile : null,
+                          child: const Text("Upload image")),
+                      const SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: _newTitle.characters.isNotEmpty &&
+                                    _newDescription.characters.isNotEmpty &&
+                                    _newImage != null
+                                ? addItem
+                                : null,
+                            child: const Text('Save'),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )));
     }
 
     return Scaffold(
@@ -126,7 +243,20 @@ class _CategoryPageState extends State<CategoryPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6.0)))),
               ),
-              ...items.map((item) => _itemCard(item))
+              ...items.map((item) => _itemCard(item)),
+              SizedBox(
+                width: 600.0,
+                child: FilledButton.icon(
+                    onPressed: () => openDialog(),
+                    label: const Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Text("WRITE YOUR OWN",
+                            style: TextStyle(fontSize: 22.0))),
+                    icon: const Icon(Icons.add),
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6.0)))),
+              ),
             ])
           ],
         ),
