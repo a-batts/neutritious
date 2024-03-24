@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neutritious/logo.dart';
 import 'package:neutritious/profile_page.dart';
 
 import 'category_page.dart';
@@ -106,12 +107,7 @@ class _MenuPageState extends State<MenuPage> {
                 children: <Widget>[
                   const SizedBox(
                       width: double.infinity,
-                      child: Text(
-                        "neutritious",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 45.0, fontWeight: FontWeight.w600),
-                      )),
+                      child: Logo()),
                   const Text(
                     "MENU",
                     style: TextStyle(fontWeight: FontWeight.w600),

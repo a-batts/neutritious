@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:neutritious/logo.dart';
 import 'package:neutritious/menu_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -42,12 +44,25 @@ class _SignInPageState extends State<SignInPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    const Text("Sign In"),
+                    const Logo(),
+                    const Text("Feed your noodle.",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500)),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Text("Sign In",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w600)),
+                    const SizedBox(
+                      height: 12,
+                    ),
                     ElevatedButton(
                         onPressed: () async {
                           signInWithGoogle();
                         },
-                        child: const Text("Sign In"))
+                        style: const ButtonStyle(padding: MaterialStatePropertyAll(EdgeInsets.zero)),
+                        child: Image.asset("asset/sign-in-with-google.png", height: 50))
                   ]))),
     );
   }
