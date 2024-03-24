@@ -27,16 +27,17 @@ class DatabaseService {
 
   Future<List<UserMenuItem>> fetchUserMenuItems(MenuCategory category) async {
     try {
-    var item = (await _db.collection(category.collection).get());
-    return item.docs.map((e) => UserMenuItem.fromMap(e.data())).toList();
-    } catch(e, trace) {
+      var item = (await _db.collection(category.collection).get());
+      return item.docs.map((e) => UserMenuItem.fromMap(e.data())).toList();
+    } catch (e, trace) {
       log(e.toString());
       log(trace.toString());
       return [];
     }
   }
 
-  Future<void> createUserMenuItem(UserMenuItem item, MenuCategory category) async {
+  Future<void> createUserMenuItem(
+      UserMenuItem item, MenuCategory category) async {
     var map = item.toMap();
     String? id = map.remove("id");
     await _db.collection(category.collection).doc(id).set(map);
