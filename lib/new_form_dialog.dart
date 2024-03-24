@@ -52,7 +52,7 @@ class _NewFormDialogState extends State<NewFormDialog> {
       title: _newTitle,
       content: _newDescription,
       imageURL: _newImageURL
-    ));
+    ), widget.category);
 
     setState(() {
       _loading = false;

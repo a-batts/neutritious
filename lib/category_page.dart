@@ -76,7 +76,9 @@ class _CategoryPageState extends State<CategoryPage> {
               child: NewFormDialog(
                 category: widget.category,
               ),
-            ));
+            )).then((x) {
+              setState(() {});
+               });
   }
 
   @override
@@ -84,24 +86,7 @@ class _CategoryPageState extends State<CategoryPage> {
     final MenuCategory category = widget.category;
     var db = DatabaseService();
 
-    // const List<UserMenuItem> items = [
-    //   UserMenuItem(
-    //       title: "10 Jumping Jacks",
-    //       content: "Lorem ipsum",
-    //       imageURL:
-    //           "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"),
-    //   UserMenuItem(
-    //       title: "Go Outside",
-    //       content: "Lorem ipsum",
-    //       imageURL:
-    //           "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Squidward_Tentacles_%28fair_use%29.svg/1200px-Squidward_Tentacles_%28fair_use%29.svg.png"),
-    //   UserMenuItem(
-    //     title: "Go Outside",
-    //     content: "Lorem ipsum",
-    //   )
-    // ];
-
-    var items = db.fetchUserMenuItems();
+    var items = db.fetchUserMenuItems(category);
 
     // Select a random item and display it //
     selectRandomItem(List<UserMenuItem> items) {
@@ -118,11 +103,9 @@ class _CategoryPageState extends State<CategoryPage> {
 
     return Scaffold(
       body: Center(
-          child: Padding(
+          child: ListView(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
+        children: [
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Icon(category.icon, size: 40.0),
               const SizedBox(
@@ -180,7 +163,6 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
             ])
           ],
-        ),
       )),
     );
   }
