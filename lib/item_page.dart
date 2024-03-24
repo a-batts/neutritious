@@ -27,6 +27,8 @@ class _ItemPageState extends State<ItemPage> {
                 imageURL,
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
+                fit: BoxFit.cover,
+                errorBuilder: (context, e, s) => Container(),
               ),
             Padding(
               padding: const EdgeInsets.all(26.0),
@@ -42,7 +44,9 @@ class _ItemPageState extends State<ItemPage> {
                     child: Row(
                       children: [
                         FilledButton.icon(
-                            onPressed: () => {},
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                             icon: const Icon(Icons.arrow_back_rounded),
                             label: const Text("Back"),
                             style: ElevatedButton.styleFrom(
