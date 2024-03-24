@@ -129,19 +129,25 @@ class _MenuPageState extends State<MenuPage> {
                     MenuCategory.desserts,
                   ),
                   SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ProfilePage()));
-                          },
-                          child: const Text(
-                            "Profile",
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.w500),
-                          ))),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProfilePage()));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0))),
+                        child: const Padding(
+                            padding: EdgeInsets.all(12.0),
+                            child: Text(
+                              "Profile",
+                              style: TextStyle(
+                                  fontSize: 18.0, fontWeight: FontWeight.w500),
+                            ))),
+                  ),
                 ])
           ],
         ),

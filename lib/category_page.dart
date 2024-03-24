@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:neutritious/db/database_service.dart';
 import 'package:neutritious/db/user_menu_item.dart';
@@ -131,7 +132,12 @@ class _CategoryPageState extends State<CategoryPage> {
                       if (snapshot.hasData) {
                         if (snapshot.data?.isEmpty == true) {
                           return const SizedBox(
-                              width: 600, child: Card(child: Text("No data")));
+                              width: 600,
+                              child: Card(
+                                  child: Padding(
+                                padding: EdgeInsets.all(20),
+                                child: Text("No data"),
+                              )));
                         } else {
                           var items = snapshot.data;
                           return Column(children: [
@@ -154,7 +160,17 @@ class _CategoryPageState extends State<CategoryPage> {
                           ]);
                         }
                       } else {
-                        return const CircularProgressIndicator();
+                        return const SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: Center(
+                            child: SizedBox(
+                              height: 48.0,
+                              width: 48.0,
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        );
                       }
                     }),
                 SizedBox(
