@@ -5,6 +5,8 @@ import 'package:neutritious/db/user_menu_item.dart';
 
 import 'item_page.dart';
 
+double sigmoid(double x) => 1 / (1 + exp(-x));
+
 class RandomPage extends StatefulWidget {
   const RandomPage({super.key, required this.item});
 
@@ -19,13 +21,37 @@ class _RandomPageState extends State<RandomPage> with TickerProviderStateMixin {
   late Animation<double> _a;
   late Animation<double> _diceAnimation;
 
-  var dice = [
-    const AssetImage('/asset/dice/dice0.png'),
-    const AssetImage('/asset/dice/dice1.png'),
-    const AssetImage('/asset/dice/dice2.png'),
-    const AssetImage('/asset/dice/dice3.png'),
-    const AssetImage('/asset/dice/dice4.png'),
-    const AssetImage('/asset/dice/dice5.png'),
+  var dice = <Widget>[
+    Image.asset(
+      'asset/dice/dice0.png',
+      height: 20,
+      width: 20,
+    ),
+    Image.asset(
+      'asset/dice/dice1.png',
+      height: 20,
+      width: 20,
+    ),
+    Image.asset(
+      'asset/dice/dice2.png',
+      height: 20,
+      width: 20,
+    ),
+    Image.asset(
+      'asset/dice/dice3.png',
+      height: 20,
+      width: 20,
+    ),
+    Image.asset(
+      'asset/dice/dice4.png',
+      height: 20,
+      width: 20,
+    ),
+    Image.asset(
+      'asset/dice/dice5.png',
+      height: 20,
+      width: 20,
+    ),
   ];
 
   @override
@@ -36,23 +62,17 @@ class _RandomPageState extends State<RandomPage> with TickerProviderStateMixin {
       vsync: this,
     );
 
-      _a = Tween(begin: 0.0, end: 19.99).animate(_animationController)
-      ..addListener(() {
-        setState(() {});
-      });
-      _diceAnimation = Tween(begin: 0.0, end: 5.99).animate(_animationController)
+    _a = Tween(begin: 0.0, end: 6.28 * 2).animate(_animationController)
       ..addListener(() {
         setState(() {});
       });
 
-      _animationController.forward().then((value) {
-        Navigator.pushReplacement(
+    _animationController.forward().then((value) {
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) =>
-                ItemPage(item: widget.item)),
+        MaterialPageRoute(builder: (context) => ItemPage(item: widget.item)),
       );
-      });
+    });
   }
 
   @override
@@ -60,14 +80,9 @@ class _RandomPageState extends State<RandomPage> with TickerProviderStateMixin {
     _animationController.dispose();
     super.dispose();
   }
-  
 
   @override
   Widget build(BuildContext context) {
-    var a = _a.value - _a.value.floor();
-    var yy = Random(_a.value.floor()).nextDouble() - 0.5 + a;
-    var xx = Random(-_a.value.floor()).nextDouble() -0.5 + a;
-
     return Scaffold(
       body: Center(
           child: Padding(
@@ -79,10 +94,22 @@ class _RandomPageState extends State<RandomPage> with TickerProviderStateMixin {
                     const Text("Randomizing...",
                         style: TextStyle(
                             fontSize: 42, fontWeight: FontWeight.w600)),
-                    Transform.translate(
-                      offset: Offset(10 * xx, 10 * yy),
-                      child: Image(image: dice[_diceAnimation.value.floor()], height: 200, width: 200,),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                      height: 200,
+                      width: 375,
+                      child: Row(
+                        children: dice.indexed
+                            .map<Widget>((x) => Padding(
+                                padding: const EdgeInsets.only(right: 20, left: 20),
+                                child: Transform.translate(
+                                  offset: Offset(0.0,
+                                      50.0 * (sin(_a.value + x.$1 / 3.14))),
+                                  child: x.$2,
+                                )))
+                            .toList(),
                       ),
+                    )
                   ]))),
     );
   }
