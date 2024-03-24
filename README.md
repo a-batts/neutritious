@@ -32,3 +32,6 @@ These categories allow the user to mindfully assess their situation and decide w
 Our webapp is built in **Flutter**, with **Firebase** powering authentication, deployment, and data storage on the backend.
 
 Once the user logs in, they are greeted with the main categories of the Dopamenu. selecting any of these will bring them to a list of activities. They can choose one of these, or press the Randomize button to roll the dice. The user can add their own activities, as well as like and dislike the built-in suggestions to curate their menu.
+
+# Image Attribution
+<a href="https://www.freepik.com/free-vector/isometric-dice-variants-black-game-cubes-isolated-white-background-all-possible-turns-collection_13090027.htm#fromView=search&page=1&position=13&uuid=4d096874-94d5-41a9-b412-5a7c732504c3">Image by hannazasimova on Freepik</a>

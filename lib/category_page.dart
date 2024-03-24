@@ -97,7 +97,7 @@ class _CategoryPageState extends State<CategoryPage> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                ItemPage(item: items.elementAt(selectedItem))),
+                RandomPage(item: items.elementAt(selectedItem))),
       );
     }
 
