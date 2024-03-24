@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neutritious/content_renderer.dart';
 import 'package:neutritious/db/user_menu_item.dart';
 
 class ItemPage extends StatefulWidget {
@@ -18,9 +19,7 @@ class _ItemPageState extends State<ItemPage> {
 
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: ListView(
           children: <Widget>[
             if (imageURL != null)
               Image.network(
@@ -38,7 +37,7 @@ class _ItemPageState extends State<ItemPage> {
                   Text(item.title,
                       style: const TextStyle(
                           fontSize: 42, fontWeight: FontWeight.w600)),
-                  Text(item.content),
+                  ContentRenderer(item:item),
                   Padding(
                     padding: const EdgeInsets.only(top: 34.0),
                     child: Row(
