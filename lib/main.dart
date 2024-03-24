@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:neutritious/sign_in_page.dart';
 import 'firebase_options.dart';
-
 
 Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo!',
       theme: ThemeData(
+        textTheme: GoogleFonts.nunitoTextTheme(),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
@@ -25,4 +26,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
