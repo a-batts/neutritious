@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neutritious/db/user_menu_item.dart';
+import 'package:neutritious/logo.dart';
 import 'package:neutritious/profile_page.dart';
 
 import 'category_page.dart';

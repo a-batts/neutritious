@@ -19,7 +19,6 @@ class RandomPage extends StatefulWidget {
 class _RandomPageState extends State<RandomPage> with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _a;
-  late Animation<double> _diceAnimation;
 
   var dice = <Widget>[
     Image.asset(

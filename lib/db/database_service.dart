@@ -28,7 +28,7 @@ class DatabaseService {
   Future<List<UserMenuItem>> fetchUserMenuItems(MenuCategory category) async {
     try {
     var item = (await _db.collection(category.collection).get());
-    return item.docs.map((e) => UserMenuItem.fromMap(e.data())).toList();
+    return item.docs.map((e) => UserMenuItem.fromMap({...e.data(), 'id': e.id})).toList();
     } catch(e, trace) {
       log(e.toString());
       log(trace.toString());

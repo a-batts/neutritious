@@ -123,113 +123,89 @@ class _SnakeGameWidgetState extends State<SnakeGameWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Snake Game'),
-      ),
-      body: isPlaying
-          ? Center(
-              child: GestureDetector(
-                onTap: () {
-                  if (!isPlaying) {
-                    setState(() {
-                      startGame();
-                    });
-                  }
-                },
-                onVerticalDragUpdate: (details) {
-                  if (direction != Direction.up && details.delta.dy > 0) {
-                    direction = Direction.down;
-                  } else if (direction != Direction.down && details.delta.dy < 0) {
-                    direction = Direction.up;
-                  }
-                },
-                onHorizontalDragUpdate: (details) {
-                  if (direction != Direction.left && details.delta.dx > 0) {
-                    direction = Direction.right;
-                  } else if (direction != Direction.right && details.delta.dx < 0) {
-                    direction = Direction.left;
-                  }
-                },
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
+    return Center(
+      child: Column(
+        children: [
+          const Text("Click to play!", style: TextStyle(fontSize: 24),),
+          const SizedBox(height: 12,),
+          SizedBox(
+            width: 500,
+            child: GestureDetector(
+              onTap: () {
+                if (!isPlaying) {
+                  setState(() {
+                    startGame();
+                  });
+                }
+              },
+              onVerticalDragUpdate: (details) {
+                if (direction != Direction.up && details.delta.dy > 0) {
+                  direction = Direction.down;
+                } else if (direction != Direction.down && details.delta.dy < 0) {
+                  direction = Direction.up;
+                }
+              },
+              onHorizontalDragUpdate: (details) {
+                if (direction != Direction.left && details.delta.dx > 0) {
+                  direction = Direction.right;
+                } else if (direction != Direction.right && details.delta.dx < 0) {
+                  direction = Direction.left;
+                }
+              },
+              child: AspectRatio(
+                aspectRatio: 1.0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    color: Colors.black,
+                    image: const DecorationImage(
+                      opacity: 0.5,
+                      image: NetworkImage(
+                          "https://cdn.britannica.com/10/152310-050-5A09D74A/Sand-dunes-Sahara-Morocco-Merzouga.jpg"),
+                      fit: BoxFit.cover,
                     ),
-                    child: GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: gridSize,
-                      ),
-                      itemCount: gridSize * gridSize,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (snake.contains(index)) {
-                          return Center(
-                            child: Container(
-                              padding: EdgeInsets.all(2),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Container(
-                                  color: Colors.green,
-                                ),
+                  ),
+                  child: GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: gridSize,
+                    ),
+                    itemCount: gridSize * gridSize,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (snake.contains(index)) {
+                        return Center(
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                color: Colors.green,
                               ),
                             ),
-                          );
-                        }
-                        if (index == food) {
-                          return Center(
-                            child: Container(
-                              padding: EdgeInsets.all(2),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Container(
-                                  color: Colors.red,
-                                ),
+                          ),
+                        );
+                      }
+                      if (index == food) {
+                        return Center(
+                          child: Container(
+                            padding: EdgeInsets.all(2),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                color: Colors.red,
                               ),
                             ),
-                          );
-                        }
-                        return Container();
-                      },
-                    ),
+                          ),
+                        );
+                      }
+                      return Container();
+                    },
                   ),
                 ),
               ),
-            )
-          : Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Snake Game',
-                    style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        startGame();
-                      });
-                    },
-                    child: Text('Start Game'),
-                  ),
-                ],
-              ),
             ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Score: $score',
-                style: TextStyle(fontSize: 18),
-              ),
-            ],
           ),
-        ),
+        ],
       ),
     );
   }
