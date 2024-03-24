@@ -1,9 +1,9 @@
-class User {
+class Profile {
   final String id;
   final String name;
   final String username;
 
-  User({
+  Profile({
     required this.id,
     required this.name,
     required this.username,
@@ -17,7 +17,7 @@ class User {
     };
   }
 
-  User.fromMap(Map<String, dynamic> map)
+  Profile.fromMap(Map<String, dynamic> map)
     : id = map['id'],
       name = map['name'],
       username = map['username'];
