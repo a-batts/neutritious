@@ -148,6 +148,7 @@ class _CategoryPageState extends State<CategoryPage> {
                               )));
                         } else {
                           var items = snapshot.data;
+                          items?.sort((a, b) => a.favorited ? -1 : 1);
                           return Column(children: [
                             SizedBox(
                               width: 600.0,
