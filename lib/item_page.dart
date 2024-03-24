@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:neutritious/types/item_data.dart';
+import 'package:neutritious/db/user_menu_item.dart';
 
 class ItemPage extends StatefulWidget {
   const ItemPage({super.key, required this.item});
 
-  final ItemData item;
+  final UserMenuItem item;
 
   @override
   State<ItemPage> createState() => _ItemPageState();
@@ -13,7 +13,8 @@ class ItemPage extends StatefulWidget {
 class _ItemPageState extends State<ItemPage> {
   @override
   Widget build(BuildContext context) {
-    ItemData item = widget.item;
+    UserMenuItem item = widget.item;
+    String? imageURL = item.imageURL;
 
     return Scaffold(
       body: Center(
@@ -21,20 +22,21 @@ class _ItemPageState extends State<ItemPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Image.network(
-              item.imageURL,
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 2,
-            ),
+            if (imageURL != null)
+              Image.network(
+                imageURL,
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 2,
+              ),
             Padding(
               padding: const EdgeInsets.all(26.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.name,
+                  Text(item.title,
                       style: const TextStyle(
                           fontSize: 42, fontWeight: FontWeight.w600)),
-                  Text(item.description),
+                  Text(item.content),
                   Padding(
                     padding: const EdgeInsets.only(top: 34.0),
                     child: Row(

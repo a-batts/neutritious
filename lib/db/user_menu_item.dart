@@ -1,15 +1,17 @@
 class UserMenuItem {
-  final String id;
+  final String? id;
   final String title;
   final String content;
+  final String? imageURL;
   final List<String> likeUIDs;
 
-  UserMenuItem({
-    required this.id,
+  const UserMenuItem({
+    this.id,
     required this.title,
     required this.content,
-    required this.likeUIDs,
-  });
+    List<String>? likeUIDs,
+    this.imageURL,
+  }) : likeUIDs = likeUIDs ?? const [];
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,6 +19,7 @@ class UserMenuItem {
       'title': title,
       'content': content,
       'likeUIDs': likeUIDs,
+      'imageURL': imageURL,
     };
   }
 
@@ -24,5 +27,6 @@ class UserMenuItem {
     : id = map['id'],
       title = map['title'],
       content = map['content'],
+      imageURL = map['imageURL'],
       likeUIDs = map['likeUIDs'];
 }
