@@ -23,7 +23,9 @@ class DatabaseService {
   }
 
   Future<void> createUserMenuItem(UserMenuItem item) async {
-    await _db.collection('menuitems').doc().set(item.toMap());
+    var map = item.toMap();
+    String? id = map.remove("id");
+    await _db.collection('menuitems').doc(id).set(map);
   }
 
   // Fetch function for Log
