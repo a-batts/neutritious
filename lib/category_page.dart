@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:neutritious/db/user_menu_item.dart';
 import 'package:neutritious/enums/menu_category.dart';
+import 'package:neutritious/new_form_dialog.dart';
 
 import 'item_page.dart';
 
@@ -67,115 +67,15 @@ class _CategoryPageState extends State<CategoryPage> {
     ));
   }
 
-  String _newTitle = "";
-  String _newDescription = "";
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  FilePickerResult? _newImage;
-
-  uploadFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-
-    setState(() {
-      _newImage = result;
-    });
-  }
-
-  addItem() {
-    // TODO: database upload here
-
-    titleController.clear();
-    descriptionController.clear();
-
-    Navigator.pop(context);
-    setState(() {
-      _newTitle = "";
-      _newDescription = "";
-      _newImage = null;
-    });
-  }
 
   openDialog() {
     showDialog<String>(
         context: context,
-        builder: (BuildContext context) => (Dialog(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 30.0, vertical: 16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          "Add to ${widget.category.name}",
-                          style: const TextStyle(
-                              fontSize: 24.0, fontWeight: FontWeight.w500),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              setState(() {
-                                _newTitle = "";
-                                _newDescription = "";
-                                _newImage = null;
-                              });
-                            },
-                            icon: const Icon(Icons.close))
-                      ],
-                    ),
-                    const SizedBox(height: 15, width: 600),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Title',
-                      ),
-                      onChanged: (String newVal) {
-                        setState(() {
-                          _newTitle = newVal;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 15),
-                    TextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Description',
-                      ),
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 12,
-                      minLines: 4,
-                      onChanged: (String newVal) {
-                        setState(() {
-                          _newDescription = newVal;
-                        });
-                      },
-                    ),
-                    Text(_newTitle),
-                    const SizedBox(height: 15),
-                    FilledButton(
-                        onPressed: _newImage == null ? uploadFile : null,
-                        child: const Text("Upload image")),
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: _newTitle.characters.isNotEmpty &&
-                                  _newDescription.characters.isNotEmpty &&
-                                  _newImage != null
-                              ? addItem
-                              : null,
-                          child: const Text('Save'),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            )));
+        builder: (BuildContext context) => Dialog(
+              child: NewFormDialog(category: widget.category,),
+            ));
   }
 
   @override
