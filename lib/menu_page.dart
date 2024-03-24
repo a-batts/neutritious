@@ -224,68 +224,68 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Wrap(
-                  runSpacing: 12.0,
-                  alignment: WrapAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(
+          child: (SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Wrap(
+                    runSpacing: 12.0,
+                    alignment: WrapAlignment.center,
+                    children: <Widget>[
+                      const SizedBox(
+                          width: double.infinity,
+                          child: Text(
+                            "neutritious",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 45.0, fontWeight: FontWeight.w600),
+                          )),
+                      const Text(
+                        "MENU",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      _todaysTreat(),
+                      _countdownTimer(),
+                      _menuItem(
+                        MenuCategory.appetizers,
+                      ),
+                      _menuItem(
+                        MenuCategory.entrees,
+                      ),
+                      _menuItem(
+                        MenuCategory.sides,
+                      ),
+                      _menuItem(
+                        MenuCategory.desserts,
+                      ),
+                      SizedBox(
                         width: double.infinity,
-                        child: Text(
-                          "neutritious",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 45.0, fontWeight: FontWeight.w600),
-                        )),
-                    const Text(
-                      "MENU",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
-                    _todaysTreat(),
-                    _countdownTimer(),
-                    _menuItem(
-                      MenuCategory.appetizers,
-                    ),
-                    _menuItem(
-                      MenuCategory.entrees,
-                    ),
-                    _menuItem(
-                      MenuCategory.sides,
-                    ),
-                    _menuItem(
-                      MenuCategory.desserts,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ProfilePage()));
-                          },
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0))),
-                          child: const Padding(
-                              padding: EdgeInsets.all(12.0),
-                              child: Text(
-                                "Profile",
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500),
-                              ))),
-                    ),
-                  ])
-            ],
-          ),
-        ),
-      )),
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProfilePage()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0))),
+                            child: const Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: Text(
+                                  "Profile",
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w500),
+                                ))),
+                      ),
+                    ])
+              ],
+            )),
+      ))),
     );
   }
 }
