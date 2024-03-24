@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:neutritious/db/user_menu_item.dart';
 import 'package:neutritious/enums/menu_category.dart';
-import 'package:neutritious/types/item_data.dart';
 
 import 'item_page.dart';
 
@@ -17,8 +17,10 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   Widget _itemCard(
-    ItemData data,
+    UserMenuItem data,
   ) {
+    String? imageURL = data.imageURL;
+
     return (SizedBox(
       width: 600,
       child: Card(
@@ -37,16 +39,17 @@ class _CategoryPageState extends State<CategoryPage> {
               children: [
                 Row(
                   children: [
+                    if(imageURL != null)
                     Image.network(
-                      data.imageURL,
+                      imageURL,
                       width: 100,
                       height: 100,
-                    ),
+                    ) else const SizedBox(width: 100, height: 100,),
                     const SizedBox(
                       width: 12.0,
                     ),
                     Text(
-                      data.name,
+                      data.title,
                       style: const TextStyle(
                           fontSize: 18.0, fontWeight: FontWeight.w500),
                     )
@@ -62,18 +65,22 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     final MenuCategory category = widget.category;
 
-    const List<ItemData> items = [
-      ItemData(
-          name: "10 Jumping Jacks",
-          description: "Lorem ipsum",
+    const List<UserMenuItem> items = [
+      UserMenuItem(
+          title: "10 Jumping Jacks",
+          content: "Lorem ipsum",
           imageURL:
-              "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"),
-      ItemData(
-          name: "Go Outside",
-          description: "Lorem ipsum",
+              "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"
+              ),
+      UserMenuItem(
+          title: "Go Outside",
+          content: "Lorem ipsum",
           imageURL:
-              "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Squidward_Tentacles_%28fair_use%29.svg/1200px-Squidward_Tentacles_%28fair_use%29.svg.png")
-    ];
+              "https://upload.wikimedia.org/wikipedia/en/thumb/7/79/Squidward_Tentacles_%28fair_use%29.svg/1200px-Squidward_Tentacles_%28fair_use%29.svg.png"),
+      UserMenuItem(
+          title: "Go Outside",
+          content: "Lorem ipsum",
+          )    ];
 
     // Select a random item and display it //
     selectRandomItem() {
@@ -119,7 +126,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(6.0)))),
               ),
-              ...items.map((ItemData item) => _itemCard(item))
+              ...items.map((item) => _itemCard(item))
             ])
           ],
         ),
