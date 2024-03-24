@@ -90,7 +90,8 @@ class _MenuPageState extends State<MenuPage> {
                             content: "Day trip with friends to Virginia Beach",
                             title: "Trip to beach",
                             imageURL:
-                                "https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_907,q_75,w_1100/v1/clients/virginiabeachva/144_3_3841_jpeg_18990e3e-6c17-4c58-bee7-03cb285c9dc3.jpg"))),
+                                "https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_907,q_75,w_1100/v1/clients/virginiabeachva/144_3_3841_jpeg_18990e3e-6c17-4c58-bee7-03cb285c9dc3.jpg",
+                            favoritible: false))),
               )
             },
             child: Padding(
@@ -168,7 +169,8 @@ class _MenuPageState extends State<MenuPage> {
                         item: UserMenuItem(
                             content: description,
                             title: title,
-                            imageURL: imageURL))),
+                            imageURL: imageURL,
+                            favoritible: false))),
               )
             },
             child: Padding(

@@ -13,6 +13,21 @@ class ItemPage extends StatefulWidget {
 }
 
 class _ItemPageState extends State<ItemPage> {
+  late bool _favorited;
+
+  @override
+  void initState() {
+    super.initState();
+    // Access widget.item to get the UserMenuItem object
+    _favorited = widget.item.favorited;
+  }
+
+  _toggleFavorite() async {
+    setState(() {
+      _favorited = !_favorited;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     UserMenuItem item = widget.item;
@@ -35,10 +50,31 @@ class _ItemPageState extends State<ItemPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.title,
-                      style: const TextStyle(
-                          fontSize: 42, fontWeight: FontWeight.w600)),
-                  ContentRenderer(item:item),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(item.title,
+                                style: const TextStyle(
+                                    fontSize: 42, fontWeight: FontWeight.w600)),
+                            ContentRenderer(item:item)
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      if (item.favoritible)
+                        IconButton(
+                            color: Theme.of(context).primaryColor,
+                            onPressed: _toggleFavorite,
+                            icon: Icon(
+                                _favorited ? Icons.star : Icons.star_outline))
+                    ],
+                  ),
                   Padding(
                     padding: const EdgeInsets.only(top: 34.0),
                     child: Row(
