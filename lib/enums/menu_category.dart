@@ -5,11 +5,29 @@ enum MenuCategory {
       collection: 'appetizers',
       title: "Appetizers",
       color: Colors.greenAccent,
-      icon: Icons.abc,
-      description: "This is a sample description"),
-  entrees(collection: 'entrees', title: "Entrees", color: Colors.blueAccent, icon: Icons.lunch_dining),
-  sides(collection: 'sides', title: "Sides", color: Colors.indigoAccent, icon: Icons.rice_bowl),
-  desserts(collection: 'desserts', title: "Desserts", color: Colors.orangeAccent, icon: Icons.cake);
+      icon: Icons.tapas,
+      description: "Quick activities to give you a boost."),
+  entrees(
+      collection: 'entrees',
+      title: "Entrees",
+      color: Colors.blueAccent,
+      icon: Icons.lunch_dining,
+      description:
+          "Longer activities that contribute to a healthy and productive lifestyle while boosting dopamine levels."),
+  sides(
+      collection: 'sides',
+      title: "Sides",
+      color: Colors.indigoAccent,
+      icon: Icons.rice_bowl,
+      description:
+          "Supplemental activities to make boring tasks more palatable."),
+  desserts(
+      collection: 'desserts',
+      title: "Desserts",
+      color: Colors.orangeAccent,
+      icon: Icons.cake,
+      description:
+          "Activities that are easy to overdo, but are great in moderation.");
 
   const MenuCategory(
       {required this.title,
