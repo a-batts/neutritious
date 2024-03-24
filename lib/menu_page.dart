@@ -149,14 +149,14 @@ class _MenuPageState extends State<MenuPage> {
 
   Widget _todaysTreat() {
     String title = "Set boundaries";
-    String description = "Lorem ipsum";
+    String description = "Plan ahead to limit jumping to easy dopamine stimulation, like doomscrolling. \n A lot of people benefit from leaving their phone in a different room or in a drawer, but think about what this could look like for you.";
     String imageURL =
-        "https://assets.simpleviewinc.com/simpleview/image/upload/c_fill,h_907,q_75,w_1100/v1/clients/virginiabeachva/144_3_3841_jpeg_18990e3e-6c17-4c58-bee7-03cb285c9dc3.jpg";
+        "https://static.vecteezy.com/system/resources/previews/021/477/807/original/young-man-using-cellphone-wireless-connection-png.png";
 
     return (SizedBox(
       width: double.infinity,
       child: Card(
-          color: Colors.pinkAccent,
+          color: Colors.pinkAccent.shade100,
           child: InkWell(
             borderRadius: BorderRadius.circular(12.0),
             onTap: () => {
@@ -164,6 +164,7 @@ class _MenuPageState extends State<MenuPage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => ItemPage(
+                        fit: true,
                         item: UserMenuItem(
                             content: description,
                             title: title,
@@ -176,43 +177,36 @@ class _MenuPageState extends State<MenuPage> {
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "today's treat",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 16.0),
-                            ),
-                            const SizedBox(
-                              height: 30.0,
-                            ),
-                            Image.network(
-                              imageURL,
-                              height: 150,
-                            ),
-                            const SizedBox(
-                              height: 30.0,
-                            ),
-                            Text(
-                              title,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 30.0,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              description,
-                              style: const TextStyle(
-                                color: Colors.white,
-                              ),
-                            )
-                          ],
-                        ),
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "today's treat",
+                            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w900),
+                          ),
+                          const SizedBox(
+                            height: 30.0,
+                          ),
+                          Image.network(
+                            imageURL,
+                            height: 150,
+                          ),
+                          const SizedBox(
+                            height: 30.0,
+                          ),
+                          Text(
+                            title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 30.0),
+                          ),
+                          Text(
+                            description,
+                            softWrap: true,
+                          )
+                        ],
                       ),
                     ),
                   ],
@@ -237,12 +231,8 @@ class _MenuPageState extends State<MenuPage> {
                     children: <Widget>[
                       const SizedBox(
                           width: double.infinity,
-                          child: Text(
-                            "neutritious",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 45.0, fontWeight: FontWeight.w600),
-                          )),
+                          child: Logo()
+                      ),
                       const Text(
                         "MENU",
                         style: TextStyle(fontWeight: FontWeight.w600),

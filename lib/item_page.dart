@@ -3,9 +3,10 @@ import 'package:neutritious/content_renderer.dart';
 import 'package:neutritious/db/user_menu_item.dart';
 
 class ItemPage extends StatefulWidget {
-  const ItemPage({super.key, required this.item});
+  const ItemPage({super.key, required this.item, this.fit = false});
 
   final UserMenuItem item;
+  final bool fit;
 
   @override
   State<ItemPage> createState() => _ItemPageState();
@@ -26,7 +27,7 @@ class _ItemPageState extends State<ItemPage> {
                 imageURL,
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height / 2,
-                fit: BoxFit.cover,
+                fit: widget.fit ? BoxFit.fitHeight : BoxFit.cover,
                 errorBuilder: (context, e, s) => Container(),
               ),
             Padding(
